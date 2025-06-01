@@ -1,0 +1,32 @@
+ktor:
+  application:
+    modules:
+      - io.lazycoder.config.ApplicationKt.module
+  deployment:
+    port: 8081
+  database:
+    type: "h2" # postgres
+    h2:
+      url: "jdbc:h2:mem:test;DB_CLOSE_DELAY=-1"
+      user: "root"
+      driver: "org.h2.Driver"
+      password: ""
+    postgres:
+      url: "jdbc:postgresql://localhost:5432/lazycoder"
+      driver: "org.postgresql.Driver"
+      user: $POSTGRES_USER
+      password: $POSTGRES_PASSWORD
+jwt:
+  domain: "http://localhost:${ktor.deployment.port}"
+  audience: "lazycoder-jwt-audience"
+  realm: "lazycoder-jwt-realm"
+  secret: $JWT_SECRET
+oauth:
+  google:
+    authorizeUrl: "https://accounts.google.com/o/oauth2/auth"
+    accessTokenUrl: "https://accounts.google.com/o/oauth2/token"
+    clientId: $GOOGLE_CLIENT_ID
+    clientSecret: $GOOGLE_CLIENT_SECRET
+    defaultScope:
+      - "https://www.googleapis.com/auth/userinfo.profile"
+    callbackUrl: "http://localhost:${ktor.deployment.port}/callback"
