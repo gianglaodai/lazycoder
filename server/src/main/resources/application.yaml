@@ -5,14 +5,14 @@ ktor:
   deployment:
     port: 8081
   database:
-    type: "h2" # postgres
+    type: "postgres" # h2|postgres
     h2:
       url: "jdbc:h2:mem:test;DB_CLOSE_DELAY=-1"
       user: "root"
       driver: "org.h2.Driver"
       password: ""
     postgres:
-      url: "jdbc:postgresql://localhost:5432/lazycoder"
+      url: "jdbc:postgresql://localhost:5432/postgres"
       driver: "org.postgresql.Driver"
       user: $POSTGRES_USER
       password: $POSTGRES_PASSWORD

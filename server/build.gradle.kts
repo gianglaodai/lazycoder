@@ -1,11 +1,12 @@
 val exposed_version: String by project
 val h2_version: String by project
+val postgres_version: String by project
 val koin_version: String by project
 val kotlin_version: String by project
 val kotlinx_html_version: String by project
-val logback_version: String by project
 val dotenv_version: String by project
 val hikari_version: String by project
+val log4j_version: String by project
 
 plugins {
     kotlin("jvm") version "2.1.10"
@@ -28,6 +29,10 @@ tasks.withType<ProcessResources> {
         include("**/*")
     }
     duplicatesStrategy = DuplicatesStrategy.WARN
+}
+
+configurations.all {
+    exclude(group = "ch.qos.logback", module = "logback-classic")
 }
 
 dependencies {
@@ -62,10 +67,14 @@ dependencies {
     implementation("org.jetbrains.exposed:exposed-core:$exposed_version")
     implementation("org.jetbrains.exposed:exposed-jdbc:$exposed_version")
     implementation("com.h2database:h2:$h2_version")
+    implementation("org.postgresql:postgresql:${postgres_version}")
     implementation("io.insert-koin:koin-ktor:$koin_version")
     implementation("io.insert-koin:koin-logger-slf4j:$koin_version")
     implementation("io.ktor:ktor-server-netty")
-    implementation("ch.qos.logback:logback-classic:$logback_version")
+//    implementation("ch.qos.logback:logback-classic:${logback_version}")
+    implementation("org.apache.logging.log4j:log4j-core:$log4j_version")
+    implementation("org.apache.logging.log4j:log4j-api:$log4j_version")
+    implementation("org.apache.logging.log4j:log4j-slf4j2-impl:$log4j_version")
     implementation("io.ktor:ktor-server-config-yaml")
     implementation("io.github.cdimascio:dotenv-kotlin:$dotenv_version")
     testImplementation("io.ktor:ktor-server-test-host")
